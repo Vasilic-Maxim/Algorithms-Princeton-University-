@@ -1,0 +1,4 @@
+*/*.ini
+*/*.class
+/out/
+/.idea/

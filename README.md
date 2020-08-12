@@ -1,1 +1,2 @@
-Algorithms (Princeton University)
+# Algorithms
+by Princeton University
