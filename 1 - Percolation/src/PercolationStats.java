@@ -6,7 +6,11 @@ public class PercolationStats {
     private final int size, area, trials;
     private final double[] ratio;
 
-    // perform independent trials on an n-by-n grid
+    /**
+     * Perform independent trials on an n-by-n grid
+     * @param n size of the grid
+     * @param trials number of tests we have to perform
+     */
     public PercolationStats(int n, int trials) {
         if (n <= 0) throw new IllegalArgumentException("Argument 'n' is too small.");
         if (trials <= 0) throw new IllegalArgumentException("Argument 'trials' is too small.");
@@ -17,22 +21,30 @@ public class PercolationStats {
         this.ratio = ratio();
     }
 
-    // sample mean of percolation threshold
+    /**
+     * @return sample mean of percolation threshold
+     */
     public double mean() {
         return StdStats.mean(ratio);
     }
 
-    // sample standard deviation of percolation threshold
+    /**
+     * @return sample standard deviation of percolation threshold
+     */
     public double stddev() {
         return StdStats.stddev(ratio);
     }
 
-    // low endpoint of 95% confidence interval
+    /**
+     * @return low endpoint of 95% confidence interval
+     */
     public double confidenceLo() {
         return mean() - CONFIDENCE_95 * stddev() / Math.sqrt(trials);
     }
 
-    // high endpoint of 95% confidence interval
+    /**
+     * @return high endpoint of 95% confidence interval
+     */
     public double confidenceHi() {
         return mean() + CONFIDENCE_95 * stddev() / Math.sqrt(trials);
     }
@@ -41,6 +53,9 @@ public class PercolationStats {
     // Utils
     //==========================================================================
 
+    /**
+     * @return tests' results
+     */
     private double[] ratio() {
         double[] result = new double[trials];
 
@@ -49,6 +64,9 @@ public class PercolationStats {
         return result;
     }
 
+    /**
+     * @return test's result
+     */
     private double trial() {
         Percolation system = new Percolation(size);
 
@@ -57,6 +75,10 @@ public class PercolationStats {
         return (double) system.numberOfOpenSites() / (double) area;
     }
 
+    /**
+     * Open one of the cells in the system
+     * @param system that we test
+     */
     private void openRandCell(Percolation system) {
         int row = StdRandom.uniform(1, size + 1);
         int col = StdRandom.uniform(1, size + 1);

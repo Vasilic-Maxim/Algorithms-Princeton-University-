@@ -14,10 +14,16 @@
       <sourceFolder url="file://$MODULE_DIR$/1 - Percolation/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/1 - Percolation/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/1 - Percolation/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/2 - Deques and Randomized Queues" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/2 - Deques and Randomized Queues/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/2 - Deques and Randomized Queues/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/checkstyleidea-libs" />
       <excludeFolder url="file://$MODULE_DIR$/.lift" />
       <excludeFolder url="file://$MODULE_DIR$/1 - Percolation/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/8puzzle/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/8puzzle/.lift" />
+      <excludeFolder url="file://$MODULE_DIR$/kdtree/.idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

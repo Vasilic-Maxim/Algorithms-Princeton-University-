@@ -32,21 +32,17 @@ public class Percolation {
      * @param col coordinate
      */
     public void open(int row, int col) {
+        if (isOpen(row, col)) return;
+
         int encoded = encode(row, col);
-
-        if (isOpen(encoded)) return;
-
         opened[encoded] = true;
         numberOfOpenSites++;
 
         uniteWithNeighbors(encoded, row, col);
 
-        if (row == 1)
-            source.union(encoded, 0);
-        if (row == size)
-            sink.union(encoded, 0);
-        if (!percolates)
-            percolates = percolates(encoded);
+        if (row == 1) source.union(encoded, 0);
+        if (row == size) sink.union(encoded, 0);
+        if (!percolates) percolates = percolates(encoded);
     }
 
     /**
