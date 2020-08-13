@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.StdRandom;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -8,7 +9,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     //==========================================================================
 
     private class MyIterator implements Iterator<Item> {
-        @SuppressWarnings("unchecked")
         private final Item[] itData = (Item[]) new Object[size];
         private int index = 0;
 
@@ -39,11 +39,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // API
     //==========================================================================
 
-    @SuppressWarnings("unchecked")
     private Item[] data = (Item[]) new Object[2];
     private int size = 0;
 
-    public RandomizedQueue() {}
+    public RandomizedQueue() {
+    }
 
     /**
      * @return is the randomized queue empty?
@@ -61,6 +61,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     /**
      * Add the item
+     *
      * @param item is a generic item
      */
     public void enqueue(Item item) {
@@ -72,6 +73,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     /**
      * Remove and return a random item
+     *
      * @return random item
      */
     public Item dequeue() {
@@ -89,6 +91,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     /**
      * Return a random item (but do not remove it)
+     *
      * @return random item
      */
     public Item sample() {
@@ -117,7 +120,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         else if (isAlmostEmpty()) appropriateSize = data.length / 2;
         else return;
 
-        //noinspection unchecked
         Item[] resized = (Item[]) new Object[appropriateSize];
         System.arraycopy(data, 0, resized, 0, this.size);
         data = resized;
