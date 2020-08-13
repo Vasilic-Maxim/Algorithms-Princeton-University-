@@ -10,9 +10,16 @@ public class BruteCollinearPoints {
     private final ArrayList<LineSegment> segments;
 
     public BruteCollinearPoints(Point[] points) {
+        if (points == null) throw new IllegalArgumentException("One of the points is null");
+        for (Point point : points)
+            if (point == null) throw new IllegalArgumentException("One of the points is null");
+
         Point[] copy = points.clone();
-        noPoints(copy);
-        validate(copy);
+        Arrays.sort(copy);
+
+        for (int i = 1; i < points.length; i++)
+            if (points[i].compareTo(points[i - 1]) == 0) throw new IllegalArgumentException("Duplicate found!");
+
         this.segments = segments(copy);
     }
 
@@ -28,29 +35,9 @@ public class BruteCollinearPoints {
     // Utils
     //==========================================================================
 
-    private static void validate(Point[] points) {
-        for (int i = 0; i < points.length; i++) {
-            validatePoint(points[i]);
-            if (i > 0) duplicates(points[i - 1], points[i]);
-        }
-    }
-
-    private static void noPoints(Point[] points) {
-        if (points == null) throw new IllegalArgumentException("One of the points is null");
-    }
-
-    private static void validatePoint(Point point) {
-        if (point == null) throw new IllegalArgumentException("One of the points is null");
-    }
-
-    private static void duplicates(Point first, Point second) {
-        if (first.compareTo(second) == 0) throw new IllegalArgumentException("Duplicate found!");
-    }
-
     private ArrayList<LineSegment> segments(Point[] points) {
         int n = points.length;
-        ArrayList<LineSegment> segments = new ArrayList<>();
-        Arrays.sort(points);
+        ArrayList<LineSegment> result = new ArrayList<>();
 
         for (int p = 0; p < n - 3; p++) {
             for (int q = p + 1; q < n - 2; q++) {
@@ -60,13 +47,13 @@ public class BruteCollinearPoints {
 
                     for (int s = r + 1; s < n; s++) {
                         if (threeOnLine(cmp, points[q], points[s])) continue;
-                        segments.add(new LineSegment(points[p], points[s]));
+                        result.add(new LineSegment(points[p], points[s]));
                     }
                 }
             }
         }
 
-        return segments;
+        return result;
     }
 
     private boolean threeOnLine(Comparator<Point> cmp, Point second, Point third) {
@@ -82,7 +69,11 @@ public class BruteCollinearPoints {
         In in = new In(args[0]);
         int n = in.readInt();
         Point[] points = new Point[n];
-        for (int i = 0; i < n; i++) points[i] = new Point(in.readInt(), in.readInt());
+        for (int i = 0; i < n; i++) {
+            int x = in.readInt();
+            int y = in.readInt();
+            points[i] = new Point(x, y);
+        }
 
         // draw the points
         StdDraw.enableDoubleBuffering();

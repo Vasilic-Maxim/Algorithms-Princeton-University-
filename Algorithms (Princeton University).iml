@@ -24,15 +24,21 @@
       <sourceFolder url="file://$MODULE_DIR$/3 - Collinear Points" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/3 - Collinear Points/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/3 - Collinear Points/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/8puzzle" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/kdtree" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/4 - 8 Puzzle" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/5 - Kd-Trees" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/4 - 8 Puzzle/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/4 - 8 Puzzle/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/4 - 8 Puzzle/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/5 - Kd-Trees/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/5 - Kd-Trees/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/5 - Kd-Trees/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/checkstyleidea-libs" />
       <excludeFolder url="file://$MODULE_DIR$/.lift" />
       <excludeFolder url="file://$MODULE_DIR$/1 - Percolation/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/8puzzle/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/8puzzle/.lift" />
-      <excludeFolder url="file://$MODULE_DIR$/kdtree/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/4 - 8 Puzzle/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/4 - 8 Puzzle/.lift" />
+      <excludeFolder url="file://$MODULE_DIR$/5 - Kd-Trees/.idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

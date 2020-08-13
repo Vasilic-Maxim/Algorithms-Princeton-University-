@@ -5,9 +5,6 @@ import edu.princeton.cs.algs4.StdOut;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * Class to find all segments containing 4 or more points in the given list of points
- */
 public class FastCollinearPoints {
 
     private final LineSegment[] segments;
@@ -108,7 +105,11 @@ public class FastCollinearPoints {
         In in = new In(args[0]);
         int n = in.readInt();
         Point[] points = new Point[n];
-        for (int i = 0; i < n; i++) points[i] = new Point(in.readInt(), in.readInt());
+        for (int i = 0; i < n; i++) {
+            int x = in.readInt();
+            int y = in.readInt();
+            points[i] = new Point(x, y);
+        }
 
         // draw the points
         StdDraw.enableDoubleBuffering();
