@@ -19,8 +19,8 @@ public class FastCollinearPoints {
      */
     public FastCollinearPoints(Point[] points) {
         // points array is not null
-        noPoints(points);
         Point[] pointsCopySO = Arrays.copyOf(points, points.length);
+        noPoints(pointsCopySO);
         validate(pointsCopySO);
 
         Point[] pointsCopyNO = Arrays.copyOf(points, points.length);

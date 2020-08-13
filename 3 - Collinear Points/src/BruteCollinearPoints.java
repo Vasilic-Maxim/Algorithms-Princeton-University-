@@ -10,9 +10,10 @@ public class BruteCollinearPoints {
     private final ArrayList<LineSegment> segments;
 
     public BruteCollinearPoints(Point[] points) {
-        noPoints(points);
-        validate(points);
-        this.segments = segments(points.clone());
+        Point[] copy = points.clone();
+        noPoints(copy);
+        validate(copy);
+        this.segments = segments(copy);
     }
 
     public int numberOfSegments() {

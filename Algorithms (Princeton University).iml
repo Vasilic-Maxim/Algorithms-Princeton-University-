@@ -24,6 +24,8 @@
       <sourceFolder url="file://$MODULE_DIR$/3 - Collinear Points" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/3 - Collinear Points/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/3 - Collinear Points/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/8puzzle" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/kdtree" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/checkstyleidea-libs" />
       <excludeFolder url="file://$MODULE_DIR$/.lift" />
