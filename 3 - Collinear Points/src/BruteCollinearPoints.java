@@ -10,24 +10,8 @@ public class BruteCollinearPoints {
     private final ArrayList<LineSegment> segments;
 
     public BruteCollinearPoints(Point[] points) {
-        // check if there are no points
-        if (points == null) throw new IllegalArgumentException("One of the points is null");
-        // check if at least one point is null
-        for (Point point : points) {
-            if (point == null) throw new IllegalArgumentException("One of the points is null");
-        }
-
-        // if at this point everything is OK then we can clone and sort points
-        Point[] copy = points.clone();
-        Arrays.sort(copy);
-
-        // check for duplicates
-        for (int i = 1; i < points.length; i++) {
-            if (copy[i].compareTo(copy[i - 1]) == 0) throw new IllegalArgumentException("Duplicate found!");
-        }
-
-        // search for segments
-        this.segments = segments(copy);
+        validate(points);
+        this.segments = segments(points.clone());
     }
 
     public int numberOfSegments() {
@@ -42,7 +26,23 @@ public class BruteCollinearPoints {
     // Utils
     //==========================================================================
 
+    private void validate(Point[] points) {
+        if (points == null) throw new IllegalArgumentException("One of the points is null");
+        for (Point point : points) {
+            if (point == null) throw new IllegalArgumentException("One of the points is null");
+        }
+    }
+
+    private void duplicates(Point[] points) {
+        for (int i = 1; i < points.length; i++) {
+            if (points[i].compareTo(points[i - 1]) == 0) throw new IllegalArgumentException("Duplicate found!");
+        }
+    }
+
     private ArrayList<LineSegment> segments(Point[] points) {
+        Arrays.sort(points);
+        duplicates(points);
+
         int n = points.length;
         ArrayList<LineSegment> result = new ArrayList<>();
 
