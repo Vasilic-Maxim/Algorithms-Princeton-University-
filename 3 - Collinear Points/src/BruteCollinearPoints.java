@@ -10,16 +10,23 @@ public class BruteCollinearPoints {
     private final ArrayList<LineSegment> segments;
 
     public BruteCollinearPoints(Point[] points) {
+        // check if there are no points
         if (points == null) throw new IllegalArgumentException("One of the points is null");
-        for (Point point : points)
+        // check if at least one point is null
+        for (Point point : points) {
             if (point == null) throw new IllegalArgumentException("One of the points is null");
+        }
 
+        // if at this point everything is OK then we can clone and sort points
         Point[] copy = points.clone();
         Arrays.sort(copy);
 
-        for (int i = 1; i < points.length; i++)
-            if (points[i].compareTo(points[i - 1]) == 0) throw new IllegalArgumentException("Duplicate found!");
+        // check for duplicates
+        for (int i = 1; i < points.length; i++) {
+            if (copy[i].compareTo(copy[i - 1]) == 0) throw new IllegalArgumentException("Duplicate found!");
+        }
 
+        // search for segments
         this.segments = segments(copy);
     }
 
@@ -43,10 +50,10 @@ public class BruteCollinearPoints {
             for (int q = p + 1; q < n - 2; q++) {
                 for (int r = q + 1; r < n - 1; r++) {
                     Comparator<Point> cmp = points[p].slopeOrder();
-                    if (threeOnLine(cmp, points[q], points[r])) continue;
+                    if (scattered(cmp, points[q], points[r])) continue;
 
                     for (int s = r + 1; s < n; s++) {
-                        if (threeOnLine(cmp, points[q], points[s])) continue;
+                        if (scattered(cmp, points[q], points[s])) continue;
                         result.add(new LineSegment(points[p], points[s]));
                     }
                 }
@@ -56,7 +63,7 @@ public class BruteCollinearPoints {
         return result;
     }
 
-    private boolean threeOnLine(Comparator<Point> cmp, Point second, Point third) {
+    private boolean scattered(Comparator<Point> cmp, Point second, Point third) {
         return cmp.compare(second, third) != 0;
     }
 
