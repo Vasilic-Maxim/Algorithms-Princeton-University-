@@ -1,9 +1,3 @@
-/* *****************************************************************************
- *  Name:
- *  Date:
- *  Description:
- **************************************************************************** */
-
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
@@ -16,31 +10,31 @@ public class FastCollinearPoints1 {
     private final ArrayList<LineSegment> segments = new ArrayList<>();
 
     public FastCollinearPoints1(Point[] points) {
-        // points array is not null
-        noPoints(points);
-        Point[] copy = points.clone();
-        validate(copy);
-        Arrays.sort(copy, Point::compareTo);
+        validate(points);
+        Point[] main = points.clone();
+        Arrays.sort(main);
 
-        int n = points.length;
+        duplicates(main);
+
+        int n = main.length;
         ArrayList<String> segmentsAsString = new ArrayList<>();
 
         // find all combinations of points
         for (int i = 0; i < n - 2; i++) {
             // sort by point
-            Comparator<Point> comp = points[i].slopeOrder();
-            Arrays.sort(copy, comp);
+            Comparator<Point> comp = main[i].slopeOrder();
+            Arrays.sort(main, comp);
             // track points on a line
             ArrayList<Point> segmentPoints = new ArrayList<>();
-            segmentPoints.add(points[i]);
+            segmentPoints.add(main[i]);
 
             int j = 0;
             while (j < n - 2) {
-                if (comp.compare(copy[j], copy[j + 2]) == 0) {
+                if (comp.compare(main[j], main[j + 2]) == 0) {
                     // search for a valid segment
                     int last = j + 2;
-                    while (last < n && comp.compare(copy[j], copy[last]) == 0) last++;
-                    segmentPoints.addAll(Arrays.asList(copy).subList(j, last));
+                    while (last < n && comp.compare(main[j], main[last]) == 0) last++;
+                    segmentPoints.addAll(Arrays.asList(main).subList(j, last));
                     j = last;
                 }
                 else j++;
@@ -75,23 +69,17 @@ public class FastCollinearPoints1 {
     // Utils
     //==========================================================================
 
-    private static void validate(Point[] points) {
-        for (int i = 0; i < points.length; i++) {
-            validatePoint(points[i]);
-            if (i > 0) duplicates(points[i - 1], points[i]);
+    private void validate(Point[] points) {
+        if (points == null) throw new IllegalArgumentException("One of the points is null");
+        for (Point point : points) {
+            if (point == null) throw new IllegalArgumentException("One of the points is null");
         }
     }
 
-    private static void noPoints(Point[] points) {
-        if (points == null) throw new IllegalArgumentException("One of the points is null");
-    }
-
-    private static void validatePoint(Point point) {
-        if (point == null) throw new IllegalArgumentException("One of the points is null");
-    }
-
-    private static void duplicates(Point first, Point second) {
-        if (first.compareTo(second) == 0) throw new IllegalArgumentException("Duplicate found!");
+    private void duplicates(Point[] points) {
+        for (int i = 1; i < points.length; i++) {
+            if (points[i].compareTo(points[i - 1]) == 0) throw new IllegalArgumentException("Duplicate found!");
+        }
     }
 
     //==========================================================================
