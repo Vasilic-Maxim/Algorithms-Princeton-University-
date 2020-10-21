@@ -32,6 +32,9 @@
       <sourceFolder url="file://$MODULE_DIR$/5 - Kd-Trees/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/5 - Kd-Trees/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/5 - Kd-Trees/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/6 - WordNet/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/6 - WordNet/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/6 - WordNet" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/checkstyleidea-libs" />
       <excludeFolder url="file://$MODULE_DIR$/.lift" />
