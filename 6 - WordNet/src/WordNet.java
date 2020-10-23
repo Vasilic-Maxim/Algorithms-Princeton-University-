@@ -87,7 +87,13 @@ public class WordNet {
         validateNoun(nounB);
 
         int i = sap.ancestor(nouns.get(nounA), nouns.get(nounB));
+        validateAncestor(i);
+
         return sets.get(i);
+    }
+
+    private void validateAncestor(int v) {
+        if (v == -1) throw new IllegalArgumentException("There is no common ancestor for that pair of vertices.");
     }
 
     private void validateDAG() {
