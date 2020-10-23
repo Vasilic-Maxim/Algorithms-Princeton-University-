@@ -1,3 +1,7 @@
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
+
+
 public class Outcast {
     private final WordNet wordnet;
 
@@ -16,18 +20,17 @@ public class Outcast {
     }
 
     public String outcast(String[] nouns) {
+        int n = nouns.length;
+        int maxDistance = Integer.MIN_VALUE;
         String outcast = null;
-        int maxDistance = 0;
-        for (String nounA : nouns) {
-            int distance = 0;
-            for (String nounB : nouns)
-                distance += wordnet.distance(nounA, nounB);
-
-            if (distance > maxDistance) {
-                outcast = nounA;
-                maxDistance = distance;
+        for (int i = 0; i < n - 1; i++)
+            for (int j = i + 1; j < n; j++) {
+                int distance = wordnet.distance(nouns[i], nouns[j]);
+                if (distance > maxDistance) {
+                    maxDistance = distance;
+                    outcast = nouns[j];
+                }
             }
-        }
 
         return outcast;
     }
