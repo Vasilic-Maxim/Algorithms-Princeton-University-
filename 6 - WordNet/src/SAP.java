@@ -11,8 +11,10 @@ public class SAP {
     private final Digraph graph;
 
     // constructor takes a digraph (not necessarily a DAG)
-    public SAP(Digraph G) {
-        this.graph = new Digraph(G);
+    public SAP(Digraph graph) {
+        if (graph == null) throw new NullPointerException("Argument should not be null");
+
+        this.graph = new Digraph(graph);
     }
 
     // do unit testing of this class
