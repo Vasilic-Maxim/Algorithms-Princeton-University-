@@ -43,8 +43,8 @@ public class SAP {
 
     // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
-        validateInteger(v);
-        validateInteger(w);
+        validateVertices(v);
+        validateVertices(w);
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
         return helper(vPaths, wPaths)[0];
@@ -52,8 +52,8 @@ public class SAP {
 
     // a common ancestor that participates in shortest ancestral path; -1 if no such path
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
-        validateInteger(v);
-        validateInteger(w);
+        validateVertices(v);
+        validateVertices(w);
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
         return helper(vPaths, wPaths)[1];
@@ -75,7 +75,13 @@ public class SAP {
         return (result[0] == INFINITY) ? new int[]{-1, -1} : result;
     }
 
-    private void validateInteger(Iterable<Integer> item) {
-        if (item == null) throw new IllegalArgumentException("Required a sequence of vertices, got NULL instead.");
+    private void validateVertices(Iterable<Integer> v) {
+        if (v == null) throw new IllegalArgumentException("Required a sequence of vertices, got NULL instead.");
+        if (isEmpty(v)) throw new IllegalArgumentException("The collection of the vertices is empty.");
+    }
+
+    private static boolean isEmpty(Iterable<Integer> v) {
+        for (Object i : v) return false;
+        return true;
     }
 }
