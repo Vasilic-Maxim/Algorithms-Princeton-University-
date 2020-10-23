@@ -4,6 +4,8 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.Collection;
+
 public class SAP {
     private static final int INFINITY = Integer.MAX_VALUE;
     private final Digraph graph;
@@ -80,8 +82,7 @@ public class SAP {
         if (isEmpty(v)) throw new IllegalArgumentException("The collection of the vertices is empty.");
     }
 
-    private static boolean isEmpty(Iterable<Integer> v) {
-        for (Object i : v) return false;
-        return true;
+    private boolean isEmpty(Iterable<Integer> v) {
+        return ((Collection<Integer>) v).isEmpty();
     }
 }

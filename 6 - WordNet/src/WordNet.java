@@ -68,6 +68,7 @@ public class WordNet {
 
     // is the word a WordNet noun?
     public boolean isNoun(String word) {
+        validateString(word);
         return nouns.contains(word);
     }
 
@@ -94,13 +95,11 @@ public class WordNet {
         if (cycle.hasCycle()) throw new IllegalArgumentException("The graph contains a cycle.");
     }
 
-    private void validateString(String item) {
-        if (item == null) throw new IllegalArgumentException("Required a string, got NULL instead.");
+    private void validateString(String s) {
+        if (s == null) throw new IllegalArgumentException("Required a string, got NULL instead.");
     }
 
     private void validateNoun(String noun) {
-        validateString(noun);
-        if (!isNoun(noun))
-            throw new IllegalArgumentException("The key is not int the dictionary.");
+        if (!isNoun(noun)) throw new IllegalArgumentException("The key is not int the dictionary.");
     }
 }
