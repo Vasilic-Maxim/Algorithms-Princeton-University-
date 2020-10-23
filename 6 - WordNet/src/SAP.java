@@ -62,19 +62,20 @@ public class SAP {
     }
 
     private int[] helper(BreadthFirstDirectedPaths vPaths, BreadthFirstDirectedPaths wPaths) {
-        // distance, ancestor
-        int[] result = {INFINITY, INFINITY};
+        int distance = INFINITY;
+        int ancestor = INFINITY;
         for (int i = 0; i < graph.V(); i++) {
             if (vPaths.hasPathTo(i) && wPaths.hasPathTo(i)) {
                 int currentDistance = vPaths.distTo(i) + wPaths.distTo(i);
-                if (currentDistance < result[0]) {
-                    result[0] = currentDistance;
-                    result[1] = i;
+                if (currentDistance < distance) {
+                    distance = currentDistance;
+                    ancestor = i;
                 }
             }
         }
 
-        return (result[0] == INFINITY) ? new int[]{-1, -1} : result;
+        if (distance == INFINITY) return new int[]{-1, -1};
+        return new int[]{distance, ancestor};
     }
 
     private void validateVertices(Iterable<Integer> v) {

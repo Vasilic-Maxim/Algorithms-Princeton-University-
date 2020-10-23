@@ -99,6 +99,15 @@ public class WordNet {
     private void validateDAG() {
         DirectedCycle cycle = new DirectedCycle(graph);
         if (cycle.hasCycle()) throw new IllegalArgumentException("The graph contains a cycle.");
+
+        boolean hasRoot = false;
+        for (int i = 0; i < graph.V(); i++)
+            if (graph.outdegree(i) == 0) {
+                if (hasRoot) throw new IllegalArgumentException("The graph has more then one root.");
+                hasRoot = true;
+            }
+
+        if (!hasRoot) throw new IllegalArgumentException("The graph does not have a root.");
     }
 
     private void validateString(String s) {
