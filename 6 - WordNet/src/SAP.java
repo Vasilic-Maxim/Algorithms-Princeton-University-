@@ -7,7 +7,6 @@ import edu.princeton.cs.algs4.StdOut;
 public class SAP {
     private static final int INFINITY = Integer.MAX_VALUE;
     private final Digraph graph;
-    private int ancestor, distance = INFINITY;
 
     // constructor takes a digraph (not necessarily a DAG)
     public SAP(Digraph G) {
@@ -32,16 +31,14 @@ public class SAP {
     public int length(int v, int w) {
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        helper(vPaths, wPaths);
-        return distance;
+        return helper(vPaths, wPaths)[0];
     }
 
     // a common ancestor of v and w that participates in a shortest ancestral path; -1 if no such path
     public int ancestor(int v, int w) {
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        helper(vPaths, wPaths);
-        return ancestor;
+        return helper(vPaths, wPaths)[1];
     }
 
     // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
@@ -50,8 +47,7 @@ public class SAP {
         validateInteger(w);
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        helper(vPaths, wPaths);
-        return distance;
+        return helper(vPaths, wPaths)[0];
     }
 
     // a common ancestor that participates in shortest ancestral path; -1 if no such path
@@ -60,24 +56,23 @@ public class SAP {
         validateInteger(w);
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        helper(vPaths, wPaths);
-        return ancestor;
+        return helper(vPaths, wPaths)[1];
     }
 
-    private void helper(BreadthFirstDirectedPaths vPaths, BreadthFirstDirectedPaths wPaths) {
-        ancestor = distance = INFINITY;
+    private int[] helper(BreadthFirstDirectedPaths vPaths, BreadthFirstDirectedPaths wPaths) {
+        // distance, ancestor
+        int[] result = {INFINITY, INFINITY};
         for (int i = 0; i < graph.V(); i++) {
             if (vPaths.hasPathTo(i) && wPaths.hasPathTo(i)) {
                 int currentDistance = vPaths.distTo(i) + wPaths.distTo(i);
-                if (currentDistance < distance) {
-                    distance = currentDistance;
-                    ancestor = i;
+                if (currentDistance < result[0]) {
+                    result[0] = currentDistance;
+                    result[1] = i;
                 }
             }
         }
 
-        if (distance == INFINITY)
-            distance = ancestor = -1;
+        return (result[0] == INFINITY) ? new int[]{-1, -1} : result;
     }
 
     private void validateInteger(Iterable<Integer> item) {
