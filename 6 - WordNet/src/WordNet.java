@@ -36,8 +36,8 @@ public class WordNet {
         // Build digraph
         graph = new Digraph(sets.size());
         in = new In(hypernyms);
-        while (!in.hasNextLine()) {
-            String[] ids = in.readLine().split("/");
+        while (in.hasNextLine()) {
+            String[] ids = in.readLine().split(",");
             int id = Integer.parseInt(ids[0]);
             for (int i = 1; i < ids.length; i++)
                 graph.addEdge(id, Integer.parseInt(ids[i]));
@@ -52,7 +52,13 @@ public class WordNet {
 
     // do unit testing of this class
     public static void main(String[] args) {
-        //
+        WordNet wordnet = new WordNet(args[0], args[1]);
+        In in = new In();
+        while (in.hasNextLine()) {
+            String nounA = in.readString();
+            String nounB = in.readString();
+            System.out.println(wordnet.distance(nounA, nounB));
+        }
     }
 
     // returns all WordNet nouns
