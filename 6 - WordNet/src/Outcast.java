@@ -28,7 +28,7 @@ public class Outcast {
                 int distance = wordnet.distance(nouns[i], nouns[j]);
                 if (distance > maxDistance) {
                     maxDistance = distance;
-                    outcast = nouns[j];
+                    outcast = nouns[i];
                 }
             }
 
