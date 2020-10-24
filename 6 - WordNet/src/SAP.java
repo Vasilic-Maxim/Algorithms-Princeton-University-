@@ -31,39 +31,43 @@ public class SAP {
 
     // length of shortest ancestral path between v and w; -1 if no such path
     public int length(int v, int w) {
-        BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
-        BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        return helper(vPaths, wPaths)[0];
+        return helper(v, w)[0];
     }
 
     // a common ancestor of v and w that participates in a shortest ancestral path; -1 if no such path
     public int ancestor(int v, int w) {
-        BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
-        BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        return helper(vPaths, wPaths)[1];
+        return helper(v, w)[1];
     }
 
     // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
         validateVertices(v);
         validateVertices(w);
-        BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
-        BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        return helper(vPaths, wPaths)[0];
+        return helper(v, w)[0];
     }
 
     // a common ancestor that participates in shortest ancestral path; -1 if no such path
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
         validateVertices(v);
         validateVertices(w);
+        return helper(v, w)[1];
+    }
+
+    private int[] helper(int v, int w) {
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        return helper(vPaths, wPaths)[1];
+        return helper(vPaths, wPaths);
+    }
+
+    private int[] helper(Iterable<Integer> v, Iterable<Integer> w) {
+        BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
+        BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
+        return helper(vPaths, wPaths);
     }
 
     private int[] helper(BreadthFirstDirectedPaths vPaths, BreadthFirstDirectedPaths wPaths) {
         int distance = INFINITY;
-        int ancestor = INFINITY;
+        int ancestor = 0;
         for (int i = 0; i < graph.V(); i++) {
             if (vPaths.hasPathTo(i) && wPaths.hasPathTo(i)) {
                 int currentDistance = vPaths.distTo(i) + wPaths.distTo(i);

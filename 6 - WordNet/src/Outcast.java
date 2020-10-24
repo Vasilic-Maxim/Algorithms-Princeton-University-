@@ -20,18 +20,24 @@ public class Outcast {
     }
 
     public String outcast(String[] nouns) {
-        int n = nouns.length;
-        int maxDistance = Integer.MIN_VALUE;
-        String outcast = null;
-        for (int i = 0; i < n - 1; i++)
-            for (int j = i + 1; j < n; j++) {
-                int distance = wordnet.distance(nouns[i], nouns[j]);
-                if (distance > maxDistance) {
-                    maxDistance = distance;
-                    outcast = nouns[i];
-                }
+        int[] distance = new int[nouns.length];
+        for (int i = 0; i < nouns.length; ++i) {
+            for (int j = i + 1; j < nouns.length; ++j) {
+                int dist = wordnet.distance(nouns[i], nouns[j]);
+                distance[i] += dist;
+                distance[j] += dist;
             }
+        }
 
-        return outcast;
+        int maxDist = 0;
+        String result = null;
+        for (int i = 0; i < distance.length; ++i) {
+            if (distance[i] > maxDist) {
+                maxDist = distance[i];
+                result = nouns[i];
+            }
+        }
+
+        return result;
     }
 }
