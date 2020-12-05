@@ -1,21 +1,23 @@
-import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Queue;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class SAP {
-    private static final int INFINITY = Integer.MAX_VALUE;
-    private final Digraph graph;
+
+    private final Digraph digraph;
 
     // constructor takes a digraph (not necessarily a DAG)
-    public SAP(Digraph graph) {
-        if (graph == null) throw new NullPointerException("Argument should not be null");
-
-        this.graph = new Digraph(graph);
+    public SAP(Digraph G) {
+        this.digraph = new Digraph(G);
     }
 
-    // do unit testing of this class
+    // for unit testing of this class (such as the one below)
     public static void main(String[] args) {
         In in = new In(args[0]);
         Digraph G = new Digraph(in);
@@ -29,60 +31,97 @@ public class SAP {
         }
     }
 
-    // length of shortest ancestral path between v and w; -1 if no such path
-    public int length(int v, int w) {
-        return helper(v, w)[0];
-    }
-
-    // a common ancestor of v and w that participates in a shortest ancestral path; -1 if no such path
-    public int ancestor(int v, int w) {
-        return helper(v, w)[1];
-    }
-
-    // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
-    public int length(Iterable<Integer> v, Iterable<Integer> w) {
-        validateVertices(v);
-        validateVertices(w);
-        return helper(v, w)[0];
-    }
-
-    // a common ancestor that participates in shortest ancestral path; -1 if no such path
-    public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
-        validateVertices(v);
-        validateVertices(w);
-        return helper(v, w)[1];
-    }
-
-    private int[] helper(int v, int w) {
-        BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
-        BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        return helper(vPaths, wPaths);
-    }
-
-    private int[] helper(Iterable<Integer> v, Iterable<Integer> w) {
-        BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(graph, v);
-        BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(graph, w);
-        return helper(vPaths, wPaths);
-    }
-
-    private int[] helper(BreadthFirstDirectedPaths vPaths, BreadthFirstDirectedPaths wPaths) {
-        int distance = INFINITY;
-        int ancestor = 0;
-        for (int i = 0; i < graph.V(); i++) {
-            if (vPaths.hasPathTo(i) && wPaths.hasPathTo(i)) {
-                int currentDistance = vPaths.distTo(i) + wPaths.distTo(i);
-                if (currentDistance < distance) {
-                    distance = currentDistance;
-                    ancestor = i;
+    private Map<Integer, Integer> getAncestors(int v) {
+        Queue<Integer> vQ = new Queue<>();
+        Map<Integer, Integer> vM = new HashMap<>();
+        vQ.enqueue(v);
+        vM.put(v, 0);
+        while (!vQ.isEmpty()) {
+            int head = vQ.dequeue();
+            int currentDist = vM.get(head);
+            for (Integer w : digraph.adj(head)) {
+                if (!vM.containsKey(w) || vM.get(w) > currentDist + 1) {
+                    vQ.enqueue(w);
+                    vM.put(w, currentDist + 1);
                 }
             }
         }
-
-        if (distance == INFINITY) return new int[]{-1, -1};
-        return new int[]{distance, ancestor};
+        return vM;
     }
 
-    private void validateVertices(Iterable<Integer> v) {
-        if (v == null) throw new IllegalArgumentException("Required a sequence of vertices, got NULL instead.");
+    // length of shortest ancestral path between v and w; -1 if no such path
+    public int length(int v, int w) {
+        if (v < 0 || v >= digraph.V())
+            throw new IndexOutOfBoundsException();
+        if (w < 0 || w >= digraph.V())
+            throw new IndexOutOfBoundsException();
+        Map<Integer, Integer> ancestorV = getAncestors(v);
+        Map<Integer, Integer> ancestorW = getAncestors(w);
+        int dist = -1;
+        for (Entry<Integer, Integer> items : ancestorV.entrySet()) {
+            if (ancestorW.containsKey(items.getKey())) {
+                int currentDist = ancestorW.get(items.getKey())
+                        + items.getValue();
+                if (dist < 0 || currentDist < dist)
+                    dist = currentDist;
+            }
+        }
+        return dist;
     }
+
+    // a common ancestor of v and w that participates in a shortest ancestral
+    // path; -1 if no such path
+    public int ancestor(int v, int w) {
+        Map<Integer, Integer> ancestorV = getAncestors(v);
+        Map<Integer, Integer> ancestorW = getAncestors(w);
+        if (v < 0 || v >= digraph.V())
+            throw new IndexOutOfBoundsException();
+        if (w < 0 || w >= digraph.V())
+            throw new IndexOutOfBoundsException();
+        int dist = -1, anc = -1;
+        for (Entry<Integer, Integer> items : ancestorV.entrySet()) {
+            if (ancestorW.containsKey(items.getKey())) {
+                int currentDist = ancestorW.get(items.getKey())
+                        + items.getValue();
+                if (dist < 0 || currentDist < dist) {
+                    dist = currentDist;
+                    anc = items.getKey();
+                }
+            }
+        }
+        return anc;
+    }
+
+    // length of shortest ancestral path between any vertex in v and any vertex
+    // in w; -1 if no such path
+    public int length(Iterable<Integer> v, Iterable<Integer> w)
+            throws IndexOutOfBoundsException {
+        int dist = -1;
+        for (Integer eV : v) {
+            for (Integer eW : w) {
+                int currentDist = length(eV, eW);
+                if (currentDist > 0 && (dist < 0 || currentDist < dist))
+                    dist = currentDist;
+            }
+        }
+        return dist;
+    }
+
+    // a common ancestor that participates in shortest ancestral path; -1 if no
+    // such path
+    public int ancestor(Iterable<Integer> v, Iterable<Integer> w)
+            throws IndexOutOfBoundsException {
+        int dist = -1, anc = -1;
+        for (Integer eV : v) {
+            for (Integer eW : w) {
+                int currentDist = length(eV, eW);
+                if (currentDist > 0 && (dist < 0 || currentDist < dist)) {
+                    dist = currentDist;
+                    anc = ancestor(eV, eW);
+                }
+            }
+        }
+        return anc;
+    }
+
 }
