@@ -35,6 +35,10 @@
       <sourceFolder url="file://$MODULE_DIR$/6 - WordNet/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/6 - WordNet/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/6 - WordNet" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/7 - Seam Carving" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/7 - Seam Carving/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/7 - Seam Carving/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/7 - Seam Carving/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/checkstyleidea-libs" />
       <excludeFolder url="file://$MODULE_DIR$/.lift" />
